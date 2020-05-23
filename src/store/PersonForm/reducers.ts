@@ -13,7 +13,14 @@ const defaultState = {
     email: '',
 }
 
-export const personFormReducer = (state = defaultState, action: IActions) => {
+export interface PersonFormState {
+    firstName: string;
+    lastName: string;
+    age: string;
+    email: string;
+}
+
+export const personFormReducer = (state: PersonFormState = defaultState, action: IActions): PersonFormState => {
     // console.log(state);
     switch (action.type) {
         case PERSON_FORM_FIRST_NAME_CHANGE:

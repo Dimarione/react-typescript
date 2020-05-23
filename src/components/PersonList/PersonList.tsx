@@ -7,9 +7,23 @@ import {
     loadPersonData,
     uploadPersonData
 } from '../../store/PersonList/actions';
+import {RootState} from "../../store/redusers";
+
+interface DispatchProps {
+    deletePerson: typeof deletePerson,
+    changeListOfPerson: typeof changeListOfPerson,
+    loadPersonData: typeof loadPersonData,
+    uploadPersonData: typeof uploadPersonData,
+}
+
+interface StateProps {
+    listOfPerson: RootState['personList']['listOfPerson']
+}
 
 
-class PersonList extends React.Component {
+type PersonListProps = DispatchProps & StateProps;
+
+class PersonList extends React.Component<PersonListProps> {
     componentDidMount() {
         console.log('Component did mount');
         this.props.loadPersonData();
@@ -57,17 +71,17 @@ class PersonList extends React.Component {
     }
 }
 
-const setStateToProps = (state) => {
+const setStateToProps = (state: RootState) => {
     return {
         listOfPerson: state.personList.listOfPerson
     }
 }
 
-const setDispatchToProps = {
+const mapDispatchToProps = {
     deletePerson: deletePerson,
     changeListOfPerson: changeListOfPerson,
     loadPersonData: loadPersonData,
     uploadPersonData: uploadPersonData,
 }
 
-export default connect(setStateToProps, setDispatchToProps)(PersonList);
+export default connect(setStateToProps, mapDispatchToProps)(PersonList);
