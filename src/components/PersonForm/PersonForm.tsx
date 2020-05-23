@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {FormEvent} from 'react';
 import './PersonForm.css';
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import {
     setFirstNameText,
     setLastNameText,
@@ -8,9 +8,19 @@ import {
     setEmailText
 } from '../../store/PersonForm/actions';
 import { IPerson } from '../../interfaces';
+import {RootState} from "../../store/redusers";
+
+interface InputProps {
+    id: string;
+    type: string;
+    value: string;
+    onChange: (event: any) => void;
+    min?: string;
+    max?: string;
+}
 
 //компанент инпута
-const Input: React.FC = (props) => {
+const Input: React.FC<InputProps> = (props) => {
     return (
         <div className = "form-group">
             <label
@@ -57,7 +67,23 @@ async function rest<IPerson>(person: IPerson) {
 
 //-------------------
 
-class PersonForm extends React.Component {
+interface PersonFormDispatchProps {
+    setFirstNameText: typeof setFirstNameText,
+    setLastNameText: typeof setLastNameText,
+    setAgeText: typeof setAgeText,
+    setEmailText: typeof setEmailText,
+}
+
+interface PersonFormStateProps {
+    firstName: string;
+    lastName: string;
+    age: string;
+    email: string;
+}
+
+type PersonFormProps = PersonFormDispatchProps & PersonFormStateProps;
+
+class PersonForm extends React.Component<PersonFormProps> {
 
     handleFirstNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.props.setFirstNameText(event.target.value);
@@ -75,7 +101,7 @@ class PersonForm extends React.Component {
         this.props.setEmailText(event.target.value)
     }
 
-    handleSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         //объект с данными пользователя
@@ -144,7 +170,7 @@ class PersonForm extends React.Component {
 }
 
 //добавляем props из state
-const setStateToProps = (state) => {
+const setStateToProps = (state: RootState) => {
     return {
         firstName: state.personForm.firstName,
         lastName: state.personForm.lastName,

@@ -9,7 +9,11 @@ const defaultState = {
     listOfPerson: []
 }
 
-export const personListReducer = (state = defaultState, action: IActions) => {
+export interface PersonListState {
+    listOfPerson: any[]
+}
+
+export const personListReducer = (state: PersonListState = defaultState, action: IActions): PersonListState => {
     console.log(state);
 
     switch (action.type) {
