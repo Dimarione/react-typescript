@@ -1,6 +1,6 @@
-export interface IActions {
+export interface IActions<T = any> {
     type: string
-    payload?: any
+    payload?: T
 }
 
 export interface IPerson {

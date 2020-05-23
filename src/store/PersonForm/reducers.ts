@@ -4,7 +4,7 @@ import { PERSON_FORM_FIRST_NAME_CHANGE } from './actions';
 import { PERSON_FORM_LAST_NAME_CHANGE } from './actions';
 import { PERSON_FORM_AGE_CHANGE } from './actions';
 import { PERSON_FORM_EMAIL_CHANGE } from './actions';
-import { IActions } from '../../interfaces';
+import {IActions, IPerson} from '../../interfaces';
 
 const defaultState = {
     firstName: '',
@@ -13,12 +13,7 @@ const defaultState = {
     email: '',
 }
 
-export interface PersonFormState {
-    firstName: string;
-    lastName: string;
-    age: string;
-    email: string;
-}
+export type PersonFormState = IPerson;
 
 export const personFormReducer = (state: PersonFormState = defaultState, action: IActions): PersonFormState => {
     // console.log(state);
